@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block content %}
+    <div id="main-container" class="container clearfix">
+        <div class="row">
+            <div class="row text-center vertical-middle-sm">
+                <h1>Login</h1>
+                <p style="color: red">pwd123456</p>
+                {% if form.errors %}
+                    <p style="color:red">Your username and password didn't match. Please try again.</p>
+                {% endif %}
+                <P>Input your username and password</P>
+                {% if next %}
+                <form class="form-horizontal" action="{% url 'account:user_login' %}?next={{ next }}" method="post">
+                {% else %}
+                <form class="form-horizontal" action="{% url 'account:user_login' %}" method="post">
+                {% endif %}
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="{{ form.username.id_for_label }}"
+                               class="col-md-5 control-label" style="color:red">
+                            <span class="glyphicon glyphicon-user"></span>
+                            Username
+                        </label>
+                        <div class="col-md-3 text-left">{{ form.username }}</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.password.id_for_label }}"
+                               class="col-md-5 control-label" style="color:blue">
+                            <span class="glyphicon glyphicon-floppy-open"></span>
+                            Password
+                        </label>
+                        <div class="col-md-3 text-left">{{ form.password }}</div>
+                    </div>
+                    <input type="submit" class="btn btn-primary btn-lg" value="Login">
+                   | <a href="{% url 'account:user_register' %}">Or Register</a>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
